@@ -63,13 +63,27 @@ h1{
   display: flex;
   width: 100%;
 
+  justify-content: center;
+  color: white;
+
   padding: 5px;
-  border: 0px;
+  border: 2px solid #6473ed;
   background-color: cornflowerblue;
+}
+
+#RestartButton:hover{
+  background-color: #648aed;
 }
 
 #RestartButton > p{
   text-align: center;
+  width: 100%;
+}
+
+#GameResult{
+  margin-top: 20px;
+  text-align: center;
+  color: white;
   width: 100%;
 }
 

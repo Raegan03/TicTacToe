@@ -1,0 +1,1 @@
+export type GameResult = 'Win' | 'Tie' | null;
