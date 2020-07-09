@@ -13,6 +13,8 @@ export class App {
     currentPlayerLabel = document.getElementById('CurrentPlayer') as HTMLTitleElement;
     gameResultLabel = document.getElementById('GameResult') as HTMLTitleElement;
     restartButton = document.getElementById('RestartButton') as HTMLTitleElement;
+    xPlayerScore = document.getElementById('XPlayerScore') as HTMLTitleElement;
+    oPlayerScore = document.getElementById('OPlayerScore') as HTMLTitleElement;
 
     tableCells: TableCell[] = [];
     moves: number = 0;
@@ -25,6 +27,7 @@ export class App {
         this.currentPlayer = this.playerX;
 
         this.restartButton.addEventListener('click', () => this.RestartGame());
+        document.addEventListener('keydown', (e) => this.HandleKey(e));
 
         this.StartGame();
     }
@@ -75,6 +78,11 @@ export class App {
     private UpdatePlayerName(){
         this.currentPlayerLabel.innerText = this.currentPlayer.playerName;
         this.gameResultLabel.innerText = null;
+    }
+
+    private UpdatePlayerScores(){
+        this.xPlayerScore.innerText = this.playerX.playerScore.toString();
+        this.oPlayerScore.innerText = this.playerO.playerScore.toString();
     }
 
     private ShowEndMessage(gameResult: GameResult){
@@ -152,6 +160,40 @@ export class App {
         return null;
     }
 
+    private HandleKey(e: KeyboardEvent){
+        if (!this.gameInProgress) return;
+
+        switch (e.keyCode){
+            case 81: //Q
+                this.onCellClicked(0);
+                break;
+            case 87: //W
+                this.onCellClicked(1);
+                break;
+            case 69: //E
+                this.onCellClicked(2);
+                break;
+            case 65: //A
+                this.onCellClicked(3);
+                break;
+            case 83: //S
+                this.onCellClicked(4);
+                break;
+            case 68: //D
+                this.onCellClicked(5);
+                break;
+            case 90: //Z
+                this.onCellClicked(6);
+                break;
+            case 88: //X
+                this.onCellClicked(7);
+                break;
+            case 67: //C
+                this.onCellClicked(8);
+                break;
+        }
+    }
+
     onCellClicked = (clickedCellIndex: number): void => {
         const cell = this.tableCells[clickedCellIndex];
         if(!this.gameInProgress || 
@@ -167,6 +209,11 @@ export class App {
         {
             this.gameInProgress = false;
             this.ShowEndMessage(gameResult);
+
+            if(gameResult == 'Win')
+                this.currentPlayer.playerScore++;
+
+            this.UpdatePlayerScores();
             return;
         }
 
